@@ -1,0 +1,44 @@
+{
+	"ImportPath": "scheduled.nats.tigger",
+	"GoVersion": "go1.4.2",
+	"Packages": [
+		"github.com/nats-io/nats"
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/nats-io/gnatsd/auth",
+			"Comment": "v0.6.8-26-g1145d9c",
+			"Rev": "1145d9c731ecbd003a03c12a307805385cb59965"
+		},
+		{
+			"ImportPath": "github.com/nats-io/gnatsd/conf",
+			"Comment": "v0.6.8-26-g1145d9c",
+			"Rev": "1145d9c731ecbd003a03c12a307805385cb59965"
+		},
+		{
+			"ImportPath": "github.com/nats-io/gnatsd/hash",
+			"Comment": "v0.6.8-26-g1145d9c",
+			"Rev": "1145d9c731ecbd003a03c12a307805385cb59965"
+		},
+		{
+			"ImportPath": "github.com/nats-io/gnatsd/hashmap",
+			"Comment": "v0.6.8-26-g1145d9c",
+			"Rev": "1145d9c731ecbd003a03c12a307805385cb59965"
+		},
+		{
+			"ImportPath": "github.com/nats-io/gnatsd/server",
+			"Comment": "v0.6.8-26-g1145d9c",
+			"Rev": "1145d9c731ecbd003a03c12a307805385cb59965"
+		},
+		{
+			"ImportPath": "github.com/nats-io/gnatsd/sublist",
+			"Comment": "v0.6.8-26-g1145d9c",
+			"Rev": "1145d9c731ecbd003a03c12a307805385cb59965"
+		},
+		{
+			"ImportPath": "github.com/nats-io/gnatsd/test",
+			"Comment": "v0.6.8-26-g1145d9c",
+			"Rev": "1145d9c731ecbd003a03c12a307805385cb59965"
+		}
+	]
+}
