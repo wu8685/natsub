@@ -1,6 +1,6 @@
-D:\work\workspace\myspace\natsub-web\src\test\java\com\natsub\ws\MockSession.java
-D:\work\workspace\myspace\natsub-web\src\test\java\com\natsub\ws\NatsHandlerTest.java
-D:\work\workspace\myspace\natsub-web\src\test\java\com\natsub\ws\TopicTest.java
-D:\work\workspace\myspace\natsub-web\src\test\java\com\natsub\ws\TopicManagerTest.java
-D:\work\workspace\myspace\natsub-web\src\test\java\com\natsub\ws\MessageProcessorTest.java
-D:\work\workspace\myspace\natsub-web\src\test\java\com\natsub\ws\action\ActionTest.java
+D:\work\workspace\myspace\natsub\src\test\java\com\natsub\ws\TopicManagerTest.java
+D:\work\workspace\myspace\natsub\src\test\java\com\natsub\ws\action\ActionTest.java
+D:\work\workspace\myspace\natsub\src\test\java\com\natsub\ws\MockSession.java
+D:\work\workspace\myspace\natsub\src\test\java\com\natsub\ws\TopicTest.java
+D:\work\workspace\myspace\natsub\src\test\java\com\natsub\ws\NatsHandlerTest.java
+D:\work\workspace\myspace\natsub\src\test\java\com\natsub\ws\MessageProcessorTest.java

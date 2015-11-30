@@ -85,10 +85,10 @@ public class TopicManager {
 class HandlerFactory {
 	
 	protected Map<String, Class<?>> handlerClasses = new HashMap<String, Class<?>>();
-	protected String natsServers;
+	protected NatsManager natsManager;
 	
 	public HandlerFactory(String natsServer) {
-		this.natsServers = natsServer;
+		this.natsManager = new NatsManager(natsServer);
 		initHandlerClasses();
 	}
 	
@@ -101,7 +101,7 @@ class HandlerFactory {
 	public NatsHandler create(Topic topic) throws Exception {
 		Class<?> clazz = searchHandlerClasses(topic.type);
 		if (clazz != null) {
-			return (NatsHandler) clazz.getDeclaredConstructor(Topic.class).newInstance(topic);
+			return (NatsHandler) clazz.getDeclaredConstructor(Topic.class,  NatsManager.class).newInstance(topic, natsManager);
 		}
 		throw new Exception("NATS info: Fail to find Nats handler for topic:" + topic);
 	}

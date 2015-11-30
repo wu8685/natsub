@@ -33,7 +33,7 @@ func main() {
 		}
 
 		_ = <-ticker.C
-		content := "{\"test\":\"hello world\"}"
+		content := "hello world"
 		err = c.Publish(topic, content)
 		if err != nil {
 			fmt.Printf("publish err: %s", err.Error())

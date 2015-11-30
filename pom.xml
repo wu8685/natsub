@@ -25,11 +25,6 @@
 			<version>1.2.17</version>
 		</dependency>
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.13</version>
-		</dependency>
-		<dependency>
 			<groupId>com.github.tyagihas</groupId>
 			<artifactId>java_nats</artifactId>
 			<version>0.5.1</version>
@@ -43,6 +38,11 @@
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-core</artifactId>
 			<version>1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
 		</dependency>
 	</dependencies>
 </project>

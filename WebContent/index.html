@@ -6,6 +6,34 @@
 	<script src="js/ws.js"></script>
 </head>
 <body>
-
+	<textarea id="nats_messages"></textarea>
+	<input type="button" id="sub" onclick="onSub()" value="subscribe" />
+	<input type="button" id="reg" onclick="onReg()" value="register handler" />
+	
+	<script>
+		(function onLoad(global) {
+			var wsManager = WSManager();
+			global.wsManager = wsManager;
+			wsManager.get_instance().connect('ws://localhost:8080/natsub/ws/wsservice');
+		})(window);
+	
+		function onSub() {
+			wsManager.get_instance().send_params({
+		        action: 'subscribe',
+		        type: '1',
+		        id: '1'
+			})
+		}
+		
+		function onReg() {
+			wsManager.get_instance().register_handler({
+				type: '1',
+				handle_message: function(message) {
+					var obj = JSON.parse(message);
+					document.getElementById('nats_messages').innerText += obj.test;
+				}
+			});
+		}
+	</script>
 </body>
 </html>

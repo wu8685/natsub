@@ -13,12 +13,12 @@ import org.apache.log4j.Logger;
 import com.natsub.ws.MessageProcessor;
 
 @ServerEndpoint(value = "/ws/wsservice")
-public class CIWebSocket {
+public class WebSocketService {
 
-	private static Logger log = Logger.getLogger(CIWebSocket.class);
+	private static Logger log = Logger.getLogger(WebSocketService.class);
 	
 	// parameter should be a string consist of nats server ips which is joined by ';'
-	protected static MessageProcessor processor = new MessageProcessor("1.1.1.1;2.2.2.2");
+	protected static MessageProcessor processor = new MessageProcessor("http://192.168.254.128:4222");
 	
 	@OnOpen
 	public void onOpen(Session session) {
