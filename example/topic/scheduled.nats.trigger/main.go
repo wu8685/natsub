@@ -10,12 +10,20 @@ import (
 )
 
 var topic string
+var message string
 
 func init() {
-	topic = *(flag.String("t", "topic.example.1", "the name of a topic"))
+	flag.StringVar(&topic, "t", "topic.example.prefix.1", "the name of the topic")
+	flag.StringVar(&message, "m", "hello world", "the message of the message")
 }
 
 func main() {
+	flag.Parse()
+	fmt.Println("topic is " + topic)
+	fmt.Println("message is " + message)
+	ticker := time.NewTicker(4 * time.Second)
+	_ = <-ticker.C
+
 	nc, _ := nats.Connect(nats.DefaultURL)
 	c, _ := nats.NewEncodedConn(nc, nats.JSON_ENCODER)
 	defer c.Close()
@@ -23,8 +31,6 @@ func main() {
 		fmt.Printf("nats error: fail to connect.\n")
 		os.Exit(0)
 	}
-
-	ticker := time.NewTicker(4 * time.Second)
 	for {
 		err := c.LastError()
 		if err != nil {
@@ -33,12 +39,11 @@ func main() {
 		}
 
 		_ = <-ticker.C
-		content := "hello world"
-		err = c.Publish(topic, content)
+		err = c.Publish(topic, message)
 		if err != nil {
 			fmt.Printf("publish err: %s", err.Error())
 			os.Exit(0)
 		}
-		fmt.Printf("public topic %s with content %s", topic, content)
+		fmt.Printf("public topic %s with content %s\n", topic, message)
 	}
 }

@@ -7,8 +7,11 @@
 </head>
 <body>
 	<textarea id="nats_messages"></textarea>
+	<br />
 	<input type="button" id="sub" onclick="onSub()" value="subscribe" />
+	<input type="button" id="unsub" onclick="onUnsub()" value="unsubscribe" />
 	<input type="button" id="reg" onclick="onReg()" value="register handler" />
+	<input type="button" id="disreg" onclick="onDisreg()" value="disregister handler" />
 	
 	<script>
 		(function onLoad(global) {
@@ -16,23 +19,42 @@
 			global.wsManager = wsManager;
 			wsManager.get_instance().connect('ws://localhost:8080/natsub/ws/wsservice');
 		})(window);
+		
+		function show(message) {
+			document.getElementById('nats_messages').innerHTML += (message + '\n');
+		}
 	
 		function onSub() {
+			show('subscribe a topic'); 
 			wsManager.get_instance().send_params({
 		        action: 'subscribe',
 		        type: '1',
-		        id: '1'
+		        id: '2'
+			})
+		}
+		
+		function onUnsub() {
+			show('unsubscribe a topic'); 
+			wsManager.get_instance().send_params({
+		        action: 'unsubscribe',
+		        type: '1',
+		        id: '2'
 			})
 		}
 		
 		function onReg() {
+			show('register a handler'); 
 			wsManager.get_instance().register_handler({
 				type: '1',
 				handle_message: function(message) {
-					var obj = JSON.parse(message);
-					document.getElementById('nats_messages').innerText += obj.test;
+					show(message); 
 				}
 			});
+		}
+		
+		function onDisreg() {
+			show('disregister handlers with type 1'); 
+			wsManager.get_instance().disregister_handler('1');
 		}
 	</script>
 </body>
