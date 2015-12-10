@@ -31,4 +31,4 @@ Run this project in a web server.
 ### Demo on web
 Access it on web page. After subscribing the topic and registering a handler, the topic presently can be received and shown in the text area.
 
-![natsub demo](example/doc/image/example.jpg)
+![natsub demo](doc/image/example.jpg)
