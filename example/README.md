@@ -2,7 +2,7 @@
 
 ## How to demo
 ### Run Nats in Docker
-First of all, build a docker image under directory docker. Then run a corresponding container.
+First of all, build a docker image under directory *docker*. Then run a corresponding container.
 ```
 docker build -t natsForNatsub .
 docker run -it -d -p 4222:4222 -e TOPIC=topic.example.prefix.1 -e MESSAGE=hello natsForNatsub
