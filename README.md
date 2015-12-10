@@ -3,6 +3,9 @@ A NATS subscribe api used on server
 
 By creating a MessageProcessor with a NATS server ips, natsub is simply integrated with the Web socket server in Java. The front end like js can easily subscribe or dissubscrbe a topic or a type of topic with any number of id by sending message. There will be just one handler to communicate with NATS server shared by any number of sessions which subscribe the same topic.
 
+## Show me a demo
+Here is a [demo](https://github.com/wu8685/natsub/blob/master/example/README.md) showing how it works.
+
 ## How to setup
 ### Setup server
 The following code shows how to initialize the web socket server with natsub handlering the messages.
@@ -25,7 +28,7 @@ The following code shows how to initialize the web socket server with natsub han
 		private static Logger log = Logger.getLogger(CIWebSocket.class);
 		
 		// parameter should be a string consist of nats server ips which is joined by ';'
-		protected static MessageProcessor processor = new MessageProcessor("1.1.1.1;2.2.2.2");
+		protected static MessageProcessor processor = new MessageProcessor("http://1.1.1.1:4222;http://2.2.2.2:4222");
 		
 		@OnOpen
 		public void onOpen(Session session) {
