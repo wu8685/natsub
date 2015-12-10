@@ -47,3 +47,4 @@ func main() {
 		fmt.Printf("public topic %s with content %s\n", topic, message)
 	}
 }
+

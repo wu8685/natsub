@@ -1,7 +1,6 @@
 FROM google/golang
 MAINTAINER optimuswu8685@gmail.com
 
-ENV TOPIC $TOPIC
 COPY /app /app
 COPY /script /script
 COPY /nats /go/src
@@ -12,4 +11,4 @@ RUN chmod 777 /app/scheduled.nats.trigger & \
 
 EXPOSE 4222
 
-CMD /script/run.sh -t $TOPIC
+CMD /script/run.sh $TOPIC $MESSAGE 

@@ -6,7 +6,7 @@ function WSManager() {
 		this._ws = null;
 
 		var _is_closed = false;
-		var handlers = getWSHandlers();
+		var handlers = [];
 
 		var _openHandler = function(evt) {
 			console.log('WebSocket open');
@@ -21,11 +21,12 @@ function WSManager() {
 			}
 
 			var data = JSON.parse(msg);
-			$.each(handlers, function(index, handler) {
+			for (var i = 0, len = handlers.length ; i < len ; ++i) {
+				var handler = handlers[i];
 				if (('type' in handler) && handler.type == data.type) {
 					handler.handle_message(data.message);
 				}
-			})
+			}
 		}
 
 		var close = function() {
@@ -61,7 +62,7 @@ function WSManager() {
 
 		var connect = function(url) {
              _ws = new WebSocket(url);
-            console.log("WebSocket connected to: " + curl);
+            console.log("WebSocket connected to: " + url);
 
             _ws.onopen = _openHandler;
             _ws.onmessage = _messageHandler;
@@ -139,20 +140,4 @@ function WSManager() {
 		get_instance: get_instance,
 	}
 
-}
-
-function getWSHandlers() {
-
-	var hello_handler = {
-		
-		// type must equal the type value of topic registered on server
-		type: "1",
-
-		// process the message
-        handle_message: function(message) {
-        	
-        }
-	}
-
-	return [hello_handler];
 }
