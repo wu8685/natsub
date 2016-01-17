@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.nats.MsgHandler;
 
 import com.google.gson.JsonObject;
-import com.natsub.ws.NatsManager;
 
 public class NatsHandler extends MsgHandler {
 	
@@ -26,33 +25,48 @@ public class NatsHandler extends MsgHandler {
 		this.nats = natsManager;
 	}
 	
-	public void register(TopicManager manager, Session session) throws IOException {
-		log.info("NATS info: Register topic " + topic.topic + ", web socket session: " + session.getId());
+	public synchronized void register(Session session) {
+		log.info("NATS: Register topic " + topic.topic + ", web socket session: " + session.getId());
 		sessions.add(session);
-		if (! manager.handlers.containsKey(topic)) {
-			manager.handlers.put(topic, this);
+		if (! hasSubscribed()) {
 			subscribe();
 		}
 	}
 	
-	public void disregister(TopicManager manager, Session session) throws IOException {
-		log.info("NATS info: Disregister topic " + topic.topic + ", web socket session: " + session.getId());
-		sessions.remove(session);
-		if (sessions.size() == 0) {
-			manager.handlers.remove(topic);
+	public synchronized void disregister(Session session) {
+		log.info("NATS: Disregister topic " + topic.topic + ", web socket session: " + session.getId());
+		if (!sessions.remove(session)) {
+			return;
+		}
+		if (sessions.size() == 0 && hasSubscribed()) {
 			unsubscribe();
 		}
 	}
 	
-	protected void subscribe() throws IOException {
-		subId = nats.getConnection().subscribe(topic.topic, this);
+	protected void subscribe() {
+		try {
+			subId = nats.getConnection().subscribe(topic.topic, this);
+			log.info("NATS: subscribe topic " + topic.topic);
+		} catch (IOException e) {
+			log.error("NATS: fail to subscribe Nats topic: " + topic.topic);
+		}
 	}
 
-	protected void unsubscribe() throws IOException {
+	protected void unsubscribe() {
 		if (subId == null || subId == -1) {
 			return;
 		}
-		nats.getConnection().unsubscribe(subId);
+		try {
+			nats.getConnection().unsubscribe(subId);
+			subId = -1;
+			log.info("NATS: unsubscribe topic " + topic.topic);
+		} catch (IOException e) {
+			log.error("NATS: fail to unsubscribe Nats topic: " + topic.topic);
+		}
+	}
+	
+	protected boolean hasSubscribed() {
+		return subId != -1;
 	}
 
 	@Override

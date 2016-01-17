@@ -20,17 +20,14 @@ public class NatsHandlerTest {
 	public void registerSession() {
 		try {
 			Session s = new MockSession();
-			handler.register(manager, s);
+			handler.register(s);
 			assertEquals(1, handler.sessions.size());
-			assertEquals(1, manager.handlerSize());
 
-			handler.register(manager, s);
+			handler.register(s);
 			assertEquals(1, handler.sessions.size());
-			assertEquals(1, manager.handlerSize());
 
-			handler.disregister(manager, s);
+			handler.disregister(s);
 			assertEquals(0, handler.sessions.size());
-			assertEquals(0, manager.handlerSize());
 		} catch (Exception e) {
 			fail();
 		}
@@ -41,22 +38,18 @@ public class NatsHandlerTest {
 		try {
 			Session s1 = new MockSession();
 			Session s2 = new MockSession();
-			handler.register(manager, s1);
-			handler.register(manager, s2);
+			handler.register(s1);
+			handler.register(s2);
 			assertEquals(2, handler.sessions.size());
-			assertEquals(1, manager.handlerSize());
 
-			handler.disregister(manager, s1);
+			handler.disregister(s1);
 			assertEquals(1, handler.sessions.size());
-			assertEquals(1, manager.handlerSize());
 
-			handler.disregister(manager, s1);
+			handler.disregister(s1);
 			assertEquals(1, handler.sessions.size());
-			assertEquals(1, manager.handlerSize());
 
-			handler.disregister(manager, s2);
+			handler.disregister(s2);
 			assertEquals(0, handler.sessions.size());
-			assertEquals(0, manager.handlerSize());
 		} catch (Exception e) {
 			fail();
 		}
@@ -67,9 +60,5 @@ class MockTopicManager extends TopicManager {
 
 	public MockTopicManager() {
 		super("");
-	}
-
-	public int handlerSize() {
-		return handlers.size();
 	}
 }

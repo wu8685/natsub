@@ -3,6 +3,7 @@ package com.natsub.ws;
 import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,12 +11,12 @@ import java.util.Set;
 import javax.websocket.CloseReason;
 import javax.websocket.Extension;
 import javax.websocket.MessageHandler;
-import javax.websocket.Session;
-import javax.websocket.WebSocketContainer;
 import javax.websocket.MessageHandler.Partial;
 import javax.websocket.MessageHandler.Whole;
 import javax.websocket.RemoteEndpoint.Async;
 import javax.websocket.RemoteEndpoint.Basic;
+import javax.websocket.Session;
+import javax.websocket.WebSocketContainer;
 
 public class MockSession implements Session {
 
@@ -193,4 +194,19 @@ public class MockSession implements Session {
 		return null;
 	}
 	
+}
+
+class MockNatsServer {
+	
+	protected static MockNatsServer NATS = new MockNatsServer();
+	
+	protected Map<String, NatsHandler> subedHandlers = new HashMap<String, NatsHandler>();
+	
+	public void sub(String topic, NatsHandler handler) {
+		subedHandlers.put(topic, handler);
+	}
+	
+	public void unsub(String topic) {
+		subedHandlers.remove(topic);
+	}
 }
