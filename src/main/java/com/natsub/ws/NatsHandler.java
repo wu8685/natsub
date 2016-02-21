@@ -80,7 +80,10 @@ public class NatsHandler extends MsgHandler {
 				JsonObject result = new JsonObject();
 				result.addProperty("message", decodeMessage);
 				result.addProperty("type", this.topic.type);
-				session.getBasicRemote().sendText(result.toString());
+				
+				synchronized(session) {
+					session.getBasicRemote().sendText(result.toString());
+				}
 			} catch (Exception e) {
 				log.error(e.getLocalizedMessage());
 			}
