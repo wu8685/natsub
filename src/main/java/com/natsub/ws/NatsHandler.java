@@ -25,15 +25,15 @@ public class NatsHandler extends MsgHandler {
 		this.nats = natsManager;
 	}
 	
-	public synchronized void register(Session session) {
+	public synchronized void register(Session session) throws IOException {
 		log.info("NATS: Register topic " + topic.topic + ", web socket session: " + session.getId());
-		sessions.add(session);
 		if (! hasSubscribed()) {
 			subscribe();
 		}
+		sessions.add(session);
 	}
 	
-	public synchronized void disregister(Session session) {
+	public synchronized void disregister(Session session) throws IOException {
 		log.info("NATS: Disregister topic " + topic.topic + ", web socket session: " + session.getId());
 		if (!sessions.remove(session)) {
 			return;
@@ -43,26 +43,18 @@ public class NatsHandler extends MsgHandler {
 		}
 	}
 	
-	protected void subscribe() {
-		try {
-			subId = nats.getConnection().subscribe(topic.topic, this);
-			log.info("NATS: subscribe topic " + topic.topic);
-		} catch (IOException e) {
-			log.error("NATS: fail to subscribe Nats topic: " + topic.topic);
-		}
+	protected void subscribe() throws IOException {
+		subId = nats.getConnection().subscribe(topic.topic, this);
+		log.info("NATS: subscribe topic " + topic.topic);
 	}
 
-	protected void unsubscribe() {
+	protected void unsubscribe() throws IOException {
 		if (subId == null || subId == -1) {
 			return;
 		}
-		try {
-			nats.getConnection().unsubscribe(subId);
-			subId = -1;
-			log.info("NATS: unsubscribe topic " + topic.topic);
-		} catch (IOException e) {
-			log.error("NATS: fail to unsubscribe Nats topic: " + topic.topic);
-		}
+		nats.getConnection().unsubscribe(subId);
+		subId = -1;
+		log.info("NATS: unsubscribe topic " + topic.topic);
 	}
 	
 	protected boolean hasSubscribed() {
